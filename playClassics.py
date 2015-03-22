@@ -134,8 +134,6 @@ def main():
 def procChar(cmnd, target):
 	if cmnd in acceptableInputs:
 		click(target)
-		print str(target) + cmnd
-
 		if cmnd in aCmnds:
 			pressA()
 		if cmnd in bCmnds:
@@ -157,6 +155,13 @@ def procChar(cmnd, target):
 		if cmnd in stCmnds:
 			pressStart()
 
+def clickM():
+	Xlib.ext.xtest.fake_input(d, X.ButtonPress, 1)
+	d.sync(); time.sleep(0.001)
+	Xlib.ext.xtest.fake_input(d, X.ButtonRelease, 1)
+	d.sync()
+
+
 def click(target):
 
 	d = display.Display()
@@ -170,24 +175,28 @@ def click(target):
 		s = d.screen()
 		root = s.root
 		root.warp_pointer(300,300)
+		clickM()
 		d.sync()
 	elif target == 2:
 		d = display.Display()
 		s = d.screen()
 		root = s.root
 		root.warp_pointer(300,600)
+		clickM()
 		d.sync()
 	elif target == 3:
 		d = display.Display()
 		s = d.screen()
 		root = s.root
 		root.warp_pointer(600,300)
+		clickM()
 		d.sync()
 	else: 
 		d = display.Display()
 		s = d.screen()
 		root = s.root
 		root.warp_pointer(600,600)
+		clickM()
 		d.sync()
 
 #Moby Dick, Upper Left
