@@ -1,6 +1,21 @@
 import virtkey
 import time
+from Xlib import X, display
 #from pymouse import PyMouse
+
+acceptableInputs="Aa Bb 	Cc 	Dd 	Ee 	Ff 	Gg 	Hh 	Ii 	Jj 	Kk 	Ll 	Mm 	Nn 	Oo 	Pp 	Qq 	Rr 	Ss 	Tt 	Uu 	Vv 	Ww 	Xx 	Yy 	Zz .,!"
+
+aCmnds=["Ee Nn "] #13+7
+bCmnds=["Rr Dd"] # 10
+leCmnds=["Tt Ff Uu Xx Yy ; Zz"] # 9 +2 + 3
+riCmnds=["Aa Kk Pp Qq .,!  Vv"] # 9 +2 +3
+upCmnds=["Oo Bb Hh"] # 9 +6 
+dnCmnds=["Ii Gg Ss"] # 9 +6 
+lCmnds=["Ww "] # 2.3 
+rCmnds=["Mm "] # 2.4
+seCmnds=["Cc Jj"] # 2.7
+stCmnds=["Ll "] # 4
+
 
 v = virtkey.virtkey()
 
@@ -101,11 +116,79 @@ def procBooks():
 
 def main():
 	count = 0;
-	while true:
-
+	while True:
+		target = 1
+		procChar(mobyPost[count % len(mobyPost)], target)
+		target = 2
+		procChar(biblPost[count % len(biblPost)], target)
+		target = 3
+		procChar(I984Post[count % len(I984Post)], target)
+		target = 4
+		procChar(dictPost[count % len(dictPost)], target)
 
 		count = count + 1
+		if(count % 100 == 0):
+			time.sleep(1.5)
 
+
+def procChar(cmnd, target):
+	if cmnd in acceptableInputs:
+		click(target)
+		print str(target) + cmnd
+
+		if cmnd in aCmnds:
+			pressA()
+		if cmnd in bCmnds:
+			pressB()
+		if cmnd in upCmnds:
+			pressUp()
+		if cmnd in dnCmnds:
+			pressDown()
+		if cmnd in leCmnds:
+			pressLeft()
+		if cmnd in riCmnds:
+			pressRight()
+		if cmnd in lCmnds:
+			pressLbtn()
+		if cmnd in rCmnds:
+			pressRbtn()
+		if cmnd in seCmnds:
+			pressSelect()
+		if cmnd in stCmnds:
+			pressStart()
+
+def click(target):
+
+	d = display.Display()
+	s = d.screen()
+	root = s.root
+	root.warp_pointer(300,300)
+	d.sync()
+
+	if target == 1:
+		d = display.Display()
+		s = d.screen()
+		root = s.root
+		root.warp_pointer(300,300)
+		d.sync()
+	elif target == 2:
+		d = display.Display()
+		s = d.screen()
+		root = s.root
+		root.warp_pointer(300,600)
+		d.sync()
+	elif target == 3:
+		d = display.Display()
+		s = d.screen()
+		root = s.root
+		root.warp_pointer(600,300)
+		d.sync()
+	else: 
+		d = display.Display()
+		s = d.screen()
+		root = s.root
+		root.warp_pointer(600,600)
+		d.sync()
 
 #Moby Dick, Upper Left
 def sendUL():
@@ -123,3 +206,4 @@ def sendBR():
 	print "test"
 
 procBooks()
+main()
